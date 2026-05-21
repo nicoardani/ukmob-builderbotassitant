@@ -4,7 +4,7 @@
 
 ## Purpose
 
-When a user sends a message like `Fetch <domain>` or `Check <URL>`, retrieve and return Trustpilot, WHOIS, and fulfilment information for the merchant.
+When a user sends a message like `Fetch <domain>` or `Check <URL>`, retrieve and return Trustpilot data and fulfilment information for the merchant.
 
 ## Input Parsing
 
@@ -21,10 +21,10 @@ https://www.example.com/page -> example.com
 If the extracted domain is a known platform such as Shopify, Etsy, Amazon, eBay, BigCommerce, Wix, or Squarespace, include:
 
 ```text
-⚠️ **Platform Domain Detected:** The URL provided is hosted on [platform name]. Trustpilot and WHOIS data will reflect the platform, not the merchant. Recommend requesting the merchant's own domain if available. If no independent domain exists, note this as a limitation in your assessment.
+⚠️ **Platform Domain Detected:** The URL provided is hosted on [platform name]. Trustpilot data will reflect the platform, not the merchant. Recommend requesting the merchant's own domain if available. If no independent domain exists, note this as a limitation in your assessment.
 ```
 
-Proceed with available storefront information, but clearly caveat Trustpilot and WHOIS sections.
+Proceed with available storefront information, but clearly caveat the Trustpilot section.
 
 ## 1. Trustpilot Data
 
@@ -42,41 +42,19 @@ If score is below 3 stars, include:
 ```text
 ⚠️ **Trustpilot Score Below 3 Stars**
 This merchant's Trustpilot score is [X]/5. Per UK onboarding policy, a risk review must be raised to Merchant Risk via the Salesforce case before proceeding.
-Contact: Agrita Khanna (agrita@squareup.com)
 ```
 
 If score is 3.0 or above, proceed normally. No escalation required.
 
-## 2. Domain Registration / WHOIS Age
+## 2. Fulfilment Timeframe Assessment
 
-Return:
-
-- Domain creation or registration date
-- Domain age in years, months, and days
-- Registrar name
-- Domain expiry date, if available
-
-### Domain Age Risk Indicators
-
-- Domain age below 6 months: `🚩 New domain — registered less than 6 months ago. Recommend enhanced due diligence.`
-- Domain age 6-12 months: `⚠️ Relatively new domain — registered less than 1 year ago. Note for assessment.`
-- Domain age over 1 year: no flag required.
-
-If domain age is below 6 months and no Trustpilot profile exists, include:
-
-```text
-⚠️ **Elevated Risk Indicator:** Domain is less than 6 months old with no Trustpilot presence. Recommend enhanced due diligence and consider requesting additional business verification from the merchant.
-```
-
-## 3. Fulfilment Timeframe Assessment
-
-Investigate and return estimated fulfilment or delivery timeframes for all merchants.
+Investigate and return estimated fulfilment or delivery timeframes for all merchants. Do not skip this section.
 
 ### Research Steps
 
 1. Check the website for a dedicated Delivery/Shipping Information page.
-2. Look for delivery timeframes on product pages or FAQs.
-3. Note if items are bespoke, handmade, made-to-order, or custom.
+2. Look for delivery timeframes stated on product pages or FAQs.
+3. Note if items are described as bespoke, handmade, made-to-order, or custom.
 4. Determine whether the business sells Products, Services, or is Hybrid.
 
 ### Output Fields
@@ -126,12 +104,11 @@ If Hybrid, assess fulfilment for the product side only and note the service comp
 ## Edge Cases
 
 - Domain not found on Trustpilot: `No Trustpilot profile found`
-- WHOIS data unavailable/private: `WHOIS data not publicly available`
 - Invalid URL/domain input: return a helpful error message
 - No delivery page found: estimate based on product type, vertical, and bespoke indicators
 - Hybrid business: assess fulfilment for product side only and note service component separately
-- Platform URL detected: caveat Trustpilot/WHOIS data and proceed with storefront assessment
-- Domain below 6 months plus no Trustpilot: flag elevated risk
+- Platform URL detected: caveat Trustpilot data and proceed with storefront assessment
+- No Trustpilot profile plus other concerns: note as a limitation but do not escalate on this basis alone
 - Trustpilot below 3: flag escalation to Merchant Risk
 
 ## Output Format
@@ -144,12 +121,6 @@ If Hybrid, assess fulfilment for the product side only and note the service comp
 • Reviews: 1,234
 • Rating: ★★★★☆
 • Profile: https://www.trustpilot.com/review/example.com
-
-🌐 **Domain WHOIS**
-• Registered: 2005-03-14
-• Age: 21 years, 2 months
-• Registrar: GoDaddy
-• Expires: 2027-03-14
 
 📦 **Fulfilment Assessment**
 • Business type: Products
