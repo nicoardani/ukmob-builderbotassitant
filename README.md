@@ -4,16 +4,21 @@ This repository documents four Builderbot agents used by the UK Clearpay Merchan
 
 ## Agents
 
-| Agent | Purpose |
-|---|---|
-| [Rolling Reserve Calculator](agents/rolling-reserve-calculator.md) | Extracts fulfilment breakdowns and calculates rolling reserve outputs. |
-| [Merchant Eligibility Assistant](agents/merchant-eligibility-assistant.md) | Provides policy-aligned second opinions on merchant vertical, business attributes, risk rating, and eligibility. |
-| [Merchant Due Diligence](agents/merchant-due-diligence.md) | Fetches Trustpilot, WHOIS, and fulfilment indicators for merchant domains. |
-| [Proof of Inventory Checker](agents/proof-of-inventory-checker.md) | Reviews merchant Proof of Inventory documents against onboarding requirements and flags dropshipping or suspicious indicators. |
+| Agent | Documentation | Raw Builderbot Prompt | Purpose |
+|---|---|---|---|
+| Rolling Reserve Calculator | [Docs](agents/rolling-reserve-calculator.md) | [Prompt](prompts/rolling-reserve-calculator.prompt.md) | Extracts fulfilment breakdowns and calculates rolling reserve outputs. |
+| Merchant Eligibility Assistant | [Docs](agents/merchant-eligibility-assistant.md) | [Prompt](prompts/merchant-eligibility-assistant.prompt.md) | Provides policy-aligned second opinions on merchant vertical, business attributes, risk rating, and eligibility. |
+| Merchant Due Diligence | [Docs](agents/merchant-due-diligence.md) | [Prompt](prompts/merchant-due-diligence.prompt.md) | Fetches Trustpilot and fulfilment indicators for merchant domains. |
+| Proof of Inventory Checker | [Docs](agents/proof-of-inventory-checker.md) | [Prompt](prompts/proof-of-inventory-checker.prompt.md) | Reviews merchant Proof of Inventory documents against onboarding requirements and flags dropshipping or suspicious indicators. |
+
+## Repository Structure
+
+- `agents/` contains cleaned, maintainable documentation for each Builderbot agent.
+- `prompts/` contains the raw prompt text used by Builderbot when answering queries.
 
 ## Usage
 
-Each file in the `agents/` directory contains the prompt/canvas for a Builderbot agent. These are intended for internal operational use by the Merchant Onboarding team.
+Use the files in `prompts/` when copying prompt text into Builderbot. Use the files in `agents/` when reviewing, maintaining, or discussing the agent logic.
 
 ## Notes
 
